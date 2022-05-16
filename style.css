@@ -1,0 +1,125 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    box-sizing: border-box;
+    text-transform: capitalize;
+    font-family: 'Inter', sans-serif;
+}
+.country-a,.language-a,.sort-a{
+    cursor: pointer;
+}
+.column{
+    border: 3px solid black;  
+}
+.heading{
+    margin-top: 10px;
+}
+.main-scrool{
+    overflow-y: scroll;
+}
+.some-headlines{
+    display: flex;
+    justify-content: center;
+}
+.card{
+    margin: 2px 5px;
+}
+.containers{
+    box-shadow: 5px 5px 16px black;
+    margin: 15px 15px;
+}
+.card-title{
+    font-size: 1.3rem;
+}
+.card-img-top{
+    max-height: 160px;
+}
+.nav-link{
+    font-size: 16px;
+}
+.btn-primary:hover{
+background-color: black;
+color: white;
+border-radius: 20px;
+box-shadow: 6px 6px 10px orange;
+}
+.d1 li, .d2 li,.d3 li{
+    text-align: center;
+    margin: 15px 10px;
+}
+a{
+    color: black;
+    text-decoration: none;
+    
+}
+.btn{
+    font-size: 20px;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.nav-link{
+    font-size: 20px;
+}
+.nav-brand{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 25px;
+}
+.navbar-nav{
+    margin-left: 30px;
+}
+.view-more{
+    display: block;
+    width: 10%;
+    color: white;
+    margin: auto;
+    margin-top: 20px;
+    padding: 10px;
+    text-transform: capitalize;
+    font-size: 20px;
+    border-radius: 20px;
+    background-color: rgb(48, 46, 46);
+}
+.view-more:hover{
+    background-color: white;
+    color: black;
+    box-shadow: 7px 7px 10px orange;
+}
+.nav-link:hover,.btn:hover{
+    background-color: white;
+    color: black !important;
+}
+@media (max-width:992.7px) {
+    .btn-group{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .dropdown-menu{
+        width: 20%;
+    background: none;
+    margin: auto;
+    }
+    .dropdown-menu li a{
+        color: white;
+    }
+    .card-title{
+        font-size: 17px;
+    }
+    .card-text{
+        font-size: 15px;
+    }
+    .btn{
+        font-size: 15px;
+    }
+}
+@media (max-width:755px) {
+
+    .some-headlines{
+        flex-wrap: wrap;
+    }
+    .card{
+        margin: 10px;
+    }
+}
