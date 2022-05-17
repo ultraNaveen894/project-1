@@ -31,7 +31,7 @@ function register(){
     }
 }
 else{
-    if(registerEmail.value==''){
+    if(registerEmail.value==''||registerConfirmPassword.value==''){
         alert('invalid details')
     }else if(emailData.includes(registerEmail.value)){
         alert('you are an existing user go to login section')

@@ -7,7 +7,7 @@ const sortBy={relevancy:'relevency',popularity:'popularity',publishment:'publish
 let cn='in';
 let sort='publishment'
 let lang='en';
-let pageSize=4;
+let pageSize=30;
 let category='general';
 
 
@@ -40,7 +40,6 @@ let category='general';
 function app(title,description,imageUrl,url){
   let card=document.querySelector('[template-card]')
 let itiratingCard=card.content.cloneNode(true).children[0]
-console.log(itiratingCard);
 itiratingCard.children[0].src=imageUrl
 itiratingCard.children[1].children[0].innerText=title
 itiratingCard.children[1].children[1].innerText=description
@@ -49,49 +48,36 @@ itiratingCard.children[1].children[2].innerText="read more"
 return itiratingCard;
 }
 
-async function loadData(country='in',category="general",sortBy='publishment',language='en',pageSize=4,){
+async function loadData(country='in',category="general",sortBy='publishment',language='en',pageSize=20,){
     let url=`https://newsapi.org/v2/top-headlines?country=${country}&pageSize=${pageSize}&category=${category}&sortBy=${sortBy}&apiKey=0b7c169fc13c4ea5997a656f501c4206`
     let data=await fetch(url)
     let parseData=await data.json();
     return parseData;
 }
 
-let someHeadlines=document.querySelectorAll('.some-headlines')
 let searchData;
 
 async function updateFunction(cn,category,sort,lang,pageSize){
-let i=0;
-someHeadlines.forEach(async(e)=>{
-  console.log(e.nextSibling)
-  if(i==arr.length){
-    i==0
-  }
-  const data=await loadData(cn,`${arr[i++]}`,sort,lang,pageSize)
+  console.log(cn)
+  const data=await loadData(cn,category,sort,lang,pageSize)
   searchData= data.articles.map((a)=>{
     let res=''
     if(a.description==null){
       res='there is no heading available to this'
     }else{
-      res=a.description.slice(0,60)
+      res=a.description.slice(0,75)
     }
     let card=app(a.title,res,a.urlToImage==null?'https://cdn.pixabay.com/photo/2017/01/18/08/25/social-media-1989152_960_720.jpg':a.urlToImage,a.url);
-    e.append(card)
-    return {title:a.title,description:res,element:card}
+    cards.append(card)
+    return {title:a.title.toLowerCase(),description:res.toLowerCase(),element:card}
   })
-  let button=document.createElement('button')
-  button.classList.add('view-more')
-  button.innerText='view more'
-  e.insertAdjacentElement('afterend',button)
-})
 }
 function deletAll(){
-  someHeadlines.forEach(e=>{
-    var child = e.lastElementChild; 
+    var child = cards.lastElementChild; 
     while (child) {
-        e.removeChild(child);
-        child = e.lastElementChild;
+        cards.removeChild(child);
+        child = cards.lastElementChild;
     }
-  })  
 }
 
 updateFunction(cn,category,sort,lang,pageSize);
@@ -100,6 +86,7 @@ updateFunction(cn,category,sort,lang,pageSize);
 let dropDown1=document.querySelector('.d1')
 let dropDown2=document.querySelector('.d2')
 let dropDown3=document.querySelector('.d3')
+let dropDown4=document.querySelector('.d4')
 
 for(let i in language){
   let li=document.createElement('li')
@@ -128,15 +115,39 @@ for(let i in sortBy){
   li.append(a)
   dropDown3.append(li)
 }
+for(let i of arr){
+  let li=document.createElement('li')
+  let a=document.createElement('a')
+  li.classList.add('sort-li')
+  a.classList.add('category-a')
+  a.innerText=i;
+  li.append(a)
+  dropDown4.append(li)
+}
+
+let categories=document.querySelectorAll('.category-a')
+let heading=document.querySelector('.heading')
+let cards=document.querySelector('.cards')
+let i=0;
+categories.forEach(e=>{
+  let cat=arr[i++]
+  e.addEventListener('click',a=>{
+    heading.innerText=cat
+    deletAll();
+    updateFunction(cn,cat,sort,lang,pageSize)
+    category=cat;
+  })
+})
 
 const countries=document.querySelectorAll('.country-a')
-console.log(countries)
+// console.log(countries)
 let j=0;
 let values=Object.values(country)
   countries.forEach(e=>{
     let countryName=values[j++]
     e.addEventListener('click',()=>{
       deletAll();
+      console.log(countryName)
       updateFunction(countryName,category,sort,lang,pageSize);
       cn=countryName;
     })
@@ -155,10 +166,10 @@ let langValues=Object.values(language)
   })
 
   const sortNews=document.querySelectorAll('.sort-a');
-  console.log(sortNews)
+  // console.log(sortNews)
   let c=0;
   let sortValues=Object.values(sortBy)
-  console.log(sortValues)
+  // console.log(sortValues)
     sortNews.forEach(e=>{
       let sortby=sortValues[c++]
       e.addEventListener('click',()=>{
@@ -171,7 +182,7 @@ let langValues=Object.values(language)
 
     let input=document.querySelector('.form-control')
   input.addEventListener('input',()=>{
-    let value=input.value;
+    let value=input.value.toLowerCase();;
     searchData.forEach(e=>{
       console.log(searchData)
       console.log(e.title)
@@ -179,3 +190,4 @@ let langValues=Object.values(language)
     e.element.classList.toggle('d-none',!visible)
   })
 })
+
